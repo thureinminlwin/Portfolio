@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create Deck
+{% endblock %}
+
+{% block main %}
+    <h2>Create a New Deck!</h2>
+    <form action="/create_deck" method="post">
+        <div class="mb-3">
+            <label for="name" class="form-label">Deck Name</label>
+            <input autocomplete="off" autofocus class="form-control" name="name" id="name" placeholder="Give your deck a fun name!" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <input class="form-control" name="description" id="description" placeholder="Describe your deck..." required>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary mb-3">Create Deck</button>
+        </div>
+        <div>
+            <a href="/" class="btn btn-primary mb-3">Home</a>
+        </div>
+    </form>
+{% endblock %}

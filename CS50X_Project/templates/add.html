@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add the word!
+{% endblock %}
+
+{% block main %}
+    <h2 class="mb-3">Add a word to the deck!</h2>
+    <form action="/add" method="post">
+        <input type="hidden" name="deck_id" value="{{ deck_id }}">
+        <div class="mb-3">
+            <label for="name" class="form-label"><b>Word</b></label>
+            <input autocomplete="off" autofocus class="form-control" name="word" id="word" placeholder="Enter the word..." required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label"><b>Meaning</b></label>
+            <textarea class="form-control" name="meaning" id="meaning" placeholder="Enter the meaning..." rows="3" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="example" class="form-label"><b>Example</b></label>
+            <textarea class="form-control" name="example" id="example" placeholder="Enter an example..." rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3">Add to deck</button>
+
+    </form>
+    <a href="/view?deck_id={{ deck_id }}" class="btn btn-primary mb-3">Back</a>
+{% endblock %}

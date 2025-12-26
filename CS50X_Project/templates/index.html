@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block main %}
+    <h1>Welcome, {{ user.username }}!</h1>
+    <h2 class="mb-4 text-center mt-3">Your Vocabulary Decks</h2>
+    <a href="/create_deck" class="btn btn-outline-success mb-4">+ New Deck</a>
+
+    {% if decks %}
+        <table class="table table-striped table-bordered shadow-sm">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Deck Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for deck in decks %}
+                <tr>
+                    <td><a href="/view?deck_id={{ deck.id }}" class="text-decoration-none text-dark">{{ deck.name }}</a></td>
+                    <td>{{ deck.description }}</td>
+                    <td>
+                        <form action="/edit_deck" method="get" class="d-inline">
+                            <input type="hidden" name="deck_id" value="{{ deck.id }}">
+                            <button type="submit" class="btn btn-sm btn-outline-primary">Edit</button>
+                        </form>
+                        <a href="/view?deck_id={{ deck.id }}" class="btn btn-sm btn-outline-primary">View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info text-center" role="alert">
+            You have no decks yet. <a href="/create_deck" class="alert-link">Create one</a>.
+        </div>
+    {% endif %}
+
+{% endblock %}

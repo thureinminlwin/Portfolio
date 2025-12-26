@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    View the deck!
+{% endblock %}
+
+{% block main %}
+
+    <h2 class="mb-3 fw-bold">{{ deck_name[0].name }}</h2>
+    <form action="/add" method="get" class="d-inline">
+        <input type="hidden" name="deck_id" value="{{ deck_id }}">
+        <button type="submit" class="btn btn-outline-success mb-3">Add Word</button>
+    </form>
+    <div class="d-flex justify-content-center mb-3">
+        <input type="text" id="searchInput" class="form-control" style="width: 300px;" placeholder="Search words...">
+    </div>
+    {% if table %}
+        <table  class="table table-striped table-hover table-bordered shadow-sm">
+            <thead class="table-primary">
+                <tr>
+                    <th style="width:18%" class="text-wrap" scope="col">Word</th>
+                    <th style="width:32%" class="text-wrap" scope="col">Meaning</th>
+                    <th style="width:32%" class="text-wrap" scope="col">Example</th>
+                    <th style="width:18%" class="text-wrap" scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in table %}
+                <tr class="word-row">
+                    <td>{{ row.word }}</td>
+                    <td class="text-wrap meaning-col">{{ row.meaning }}</td>
+                    <td class="text-wrap example-col">{{ row.example }}</td>
+                    <td>
+                        <form action="/edit_word" method="get" style="display:inline;">
+                            <input type="hidden" name="word_id" value="{{ row.id }}">
+                            <input type="hidden" name="deck_id" value="{{ row.deck_id }}">
+                            <button type="submit" class="btn btn-outline-success">Edit</button>
+                        </form>
+                        <form action="/delete_word" method="post" style="display:inline;"  onsubmit="return confirm('Are you sure you want to delete this word? This action cannot be undone.')">
+                            <input type="hidden" name="word_id" value="{{ row.id }}">
+                            <input type="hidden" name="deck_id" value="{{ row.deck_id }}">
+                            <button type="submit" class="btn btn-outline-danger">Delete</button>
+                        </form>
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    <a href="/" class="btn btn-primary mb-3">Home</a>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const searchInput = document.getElementById("searchInput");
+            const rows = document.querySelectorAll(".word-row");
+
+            searchInput.addEventListener("input", () => {
+                const keyword = searchInput.value.toLowerCase();
+
+                rows.forEach(row => {
+                    const word = row.cells[0].innerText.toLowerCase();
+                    if (word.includes(keyword)) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

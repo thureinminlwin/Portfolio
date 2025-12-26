@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit the word!
+{% endblock %}
+
+{% block main %}
+    <h2>Edit the word!</h2>
+    <form action="/edit_word" method="post">
+        <input type="hidden" name="word_id" value="{{ request.args.get('word_id') }}">
+        <input type="hidden" name="deck_id" value="{{ request.args.get('deck_id') }}">
+        <div class="mb-3">
+            <label for="name" class="form-label"><b>Word</b></label>
+            <input autocomplete="off" autofocus class="form-control" name="word" id="word" value="{{ word.word }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label"><b>Meaning</b></label>
+            <input class="form-control" name="meaning" id="meaning" value="{{ word.meaning}}" required>
+        </div>
+        <div class="mb-3">
+            <label for="example" class="form-label"><b>Example</b></label>
+            <textarea class="form-control" name="example" id="example" rows="3" required>{{ word.example }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3">Save</button>
+        <a href="/view?deck_id={{ request.args.get('deck_id') }}" class="btn btn-outline-secondary mb-3 ms-2">Cancel</a>
+    </form>
+{% endblock %}
